@@ -83,15 +83,15 @@ import pandas as pd
 # print(d.shape)
 # print("")
 
-s = pd.Series([1, 3, 5, nan, 6, 8])
-print(s)
-s = pd.Series([1, 20, 3, 40], index=['a', 'b', 'c', 'd'])
-print(s)
+# s = pd.Series([1, 3, 5, nan, 6, 8])
+# print(s)
+# s = pd.Series([1, 20, 3, 40], index=['a', 'b', 'c', 'd'])
+# print(s)
 data = {'kraj': ['belgia', 'polska', 'uk'], 'stolica': ['bruksela', 'warszawa', 'londyn'],
         'populacja': [111908462, 400000000, 511908462]}
 df = pd.DataFrame(data)
-print(df)
-print(df.dtypes)
+# print(df)
+# print(df.dtypes)
 # df = pd.read_csv('dane.csv', header=0, sep=';', decimal='.')
 # print(df)
 # df.to_csv('plik.csv', index=False)
@@ -124,32 +124,74 @@ print(df.dtypes)
 # print('#########')
 # print(seria)
 
-print(s[~(s > 10)])
-print(s[(s < 13) & (s > 8)])
-
-print(df[(df.populacja > 1000000) & (df.index.isin([0, 2]))])
-
-print('###########')
-szukaj = ['belgia', 'polska']
-print(df.isin(szukaj))
-
-s['e'] = 15
-print(s.e)
-s['f'] = 16
-print(s)
-
-df.loc[3] = 'dodane'
-print(df)
+# print(s[~(s > 10)])
+# print(s[(s < 13) & (s > 8)])
+#
+# print(df[(df.populacja > 1000000) & (df.index.isin([0, 2]))])
+#
+# print('###########')
+# szukaj = ['belgia', 'polska']
+# print(df.isin(szukaj))
+#
+# s['e'] = 15
+# print(s.e)
+# s['f'] = 16
+# print(s)
+#
+# df.loc[3] = 'dodane'
+# print(df)
 df.loc[4] = ['Polska', 'Warszawa', 38000000]
 print(df)
+#
+# new_df = df.drop([1])
+# print(new_df)
+#
+# df.drop([3], inplace=True)
+# print(df)
+#
+# # df.drop('kraj', axis=1, inplace=True)
+df['kontynent'] = ['europa', 'azja', 'ameryka poludniowa', 'europa']
+# print(df)
+#
+# print(df.sort_values(by='kraj'))
+# grouped = df.groupby(['kontynent'])
+# print(grouped.get_group('europa'))
+# print(df.groupby(['kontynent']).agg({'populacja': ['sum']}))
+#
+# print(df.groupby(['kontynent']).agg('populacja').sum())
 
-new_df = df.drop([1])
-print(new_df)
+import matplotlib.pyplot as plt
+import numpy as np
 
-df.drop([3],inplace=True)
+# ts = pd.Series(np.random.randn(1000))
+# ts = ts.cumsum()
+# print(ts)
+# ts.plot()
+# plt.show()
+#
+# print(df)
+#
+# grupa = df.groupby(['kontynent']).agg({'populacja': 'sum'})
+# print(grupa)
+#
+# grupa.plot(kind='bar', xlabel='kontynent', ylabel='mld', rot=0, legend=True, title='populacja z podziałem na kontynent')
+# plt.savefig('kontynent.png')
+# plt.show()
+
+# df = pd.read_csv('dane.csv', header=0, sep=";", decimal='.')
+# print(df)
+#
+# grupa = (df.groupby(['Imię i nazwisko']).agg({'Wartość zamówienia': ['sum']}))
+# grupa.plot(kind='pie', subplots=True, autopct='%.2f %%', fontsize=20, figsize=(6,6), colors=['red', 'green',])
+# plt.legend(loc='lower right')
+# plt.title('Suma zamównienia dla sprzedawcy')
+# plt.show()
+
+ts=pd.Series(np.random.randn(1000))
+ts = ts.cumsum()
+df = pd.DataFrame(ts, columns=['wartosci'])
 print(df)
-
-df.drop('kraj',axis=1,inplace=True)
-df['kontynent']=['europa','azja','ameryka poludniowa','europa']
-print(df)
-
+df['Srednia kroczaca'] = df.rolling(window=50).mean()
+df.plot()
+plt.legend(loc='best')
+plt.show()
